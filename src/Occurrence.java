@@ -29,4 +29,10 @@ public class Occurrence {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "DOCUMENT: " + docName + " | FREQUENCY IN DOCUMENT: " + termFrequency;
+	}
 }

@@ -12,7 +12,7 @@ public class Term {
 	{
 		this.name = name.toLowerCase();
 		docFrequency = 0;
-		totalFrequency = 0;
+		//totalFrequency = 0;
 	}
 	
 	
@@ -23,6 +23,8 @@ public class Term {
 	 */
 	public void incFrequency(String document)
 	{
+		totalFrequency++;
+		
 		Occurrence temp = new Occurrence(document);
 		//Case: Occurrence exists w/ docName in docList
 		//increments the frequency of Occurrence
@@ -59,5 +61,17 @@ public class Term {
 		}
 		return false;
 	}	
+	@Override
+	public String toString()
+	{
+		
+		return (name + "  " + docFrequency);
+	}
+
+
+	public int compareTo(Term other) 
+	{
+		return this.name.compareTo(other.name);
+	}
 }
 
