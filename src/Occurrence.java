@@ -13,7 +13,7 @@ public class Occurrence {
 	{
 		++termFrequency;
 	}
-	@Override
+	//@Override
 	public boolean equals(Object testName)
 	{
 		if(testName instanceof Occurrence)
@@ -30,7 +30,7 @@ public class Occurrence {
 		return false;
 	}
 	
-	@Override
+	//@Override
 	public String toString()
 	{
 		return "DOCUMENT: " + docName + " | FREQUENCY IN DOCUMENT: " + termFrequency;
