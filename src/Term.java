@@ -15,6 +15,10 @@ public class Term {
 		//totalFrequency = 0;
 	}
 	
+	public int compareNum(Term other)
+	{
+		return (this.totalFrequency - other.totalFrequency);
+	}
 	
 	/* increments totalFrequency and either 
 	 * a) creates a new Occurrence object if there is not one with document as its docName 
@@ -30,7 +34,7 @@ public class Term {
 		//increments the frequency of Occurrence
 		if(docList.contains(temp))
 		{
-			(docList.get(docList.indexOf(document))).incFrequency();
+			(docList.get(docList.indexOf(temp))).incFrequency();
 		}
 		//Case: Occurrence DNE w/ docName in docList
 		//creates a new Occurrence object 
@@ -64,14 +68,16 @@ public class Term {
 	@Override
 	public String toString()
 	{
-		
 		return (name + "  " + docFrequency);
 	}
 
+	public String getName()
+	{
+		return name;
+	}
 
 	public int compareTo(Term other) 
 	{
 		return this.name.compareTo(other.name);
 	}
 }
-
