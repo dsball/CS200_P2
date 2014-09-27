@@ -1,3 +1,9 @@
+//-------------------------------------------------------------------------------------------------
+//mergeSortAlpha() and mergeSortNum() are implementations from
+//Data Abstraction and Problem Solving with Java, 3rd edition, 2011, Frank Carrano, Janet Prichard.
+//pp 529-531.
+//-------------------------------------------------------------------------------------------------
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,9 +64,16 @@ public class WebPages {
 				//determine index of Term or insertion point
 				tempTerm = new Term(tempWord);
 				int i = findClosest(new Term(tempWord), 0, termIndex.size() - 1 );
-				
 				//increment or create new term as necessary
-				if( termIndex.get(i).equals(tempTerm))
+				if(termIndex.isEmpty())
+				{
+					termIndex.add(tempTerm);
+				}
+				else if(i > termIndex.size()-1)
+				{
+					termIndex.add(tempTerm);
+				}
+				else if(termIndex.get(i).equals(tempTerm))
 				{
 					termIndex.get(i).incFrequency(filename);
 				}
@@ -99,12 +112,14 @@ public class WebPages {
 	 */
 	public void pruneStopWords(int n)
 	{
-		mergeSortNum();
+		mergeSortNum(0, termIndex.size());
 		for(int i = 0 ; i < n ; i++)
 		{
 			termIndex.remove(i);
 		}
-		mergeSortAlpha();
+		int low = 0;
+		int high = termIndex.size();
+		mergeSortAlpha(low, high);
 	}
 	
 	/* Search for word in termIndex.
@@ -174,16 +189,114 @@ public class WebPages {
 	/*TODO: Implement mergeSortAlpha and mergeSortNum
 	 *sort ascending alphabetically by name using mergesort algorithm
 	 */
-	private void mergeSortAlpha()
+	private void mergeSortAlpha(int low, int high)
 	{
+		//Check to see if low is smaller than high, if it is not
+		//the array is sorted
+		if (low<high)
+		{
+			//This finds the middle of the arraylist
+			int middle = (low + high) / 2;
+			//Sort the left side of the arraylist
+			mergeSortAlpha(low, middle);
+			//Sort the right side of he arraylist
+			mergeSortAlpha(middle+1, high);
+			//Combine the two halves
+			mergeAlpha(low, middle, high);
+		}
+	}
+	
+	private void mergeAlpha(int low, int mid, int high)
+	{
+		ArrayList<Term> temporaryStorageForMergeSort = new ArrayList<Term>();
+		//Copy all the terms into the helper array
+		for (int i = low; i < high; i++)
+		{
+			if (temporaryStorageForMergeSort.size()==0)
+			{
+				temporaryStorageForMergeSort.add(termIndex.get(i));
+			}
+			else
+			{
+				temporaryStorageForMergeSort.set(i, termIndex.get(i));
+			}
+		}
+		int i = low;
+		int j = mid+1;
+		int k = low;
 		
+		//Copy smaller values to the left and right side back
+		//into the original array
+		while (i<= mid && j<= high)
+		{
+			if (j==high)
+			{
+				termIndex.add(k, temporaryStorageForMergeSort.get(i));
+			}
+			else
+			{
+				if (temporaryStorageForMergeSort.get(i).compareTo(temporaryStorageForMergeSort.get(j))<=0)
+				{
+					termIndex.set(k, temporaryStorageForMergeSort.get(i));
+					i++;
+				}
+				else
+				{
+					termIndex.set(k, temporaryStorageForMergeSort.get(j));
+					j++;
+				}
+			}
+			k++;
+		}
+		
+		
+		//Copy the rest of the left side of the array into the original
+		//arraylist
+		while (i <= mid)
+		{
+			termIndex.set(k, temporaryStorageForMergeSort.get(i));
+			k++;
+			i++;
+		}
 	}
 	
 	/*TODO: Implement mergeSortNum
 	 * sort ascending by total frequency using mergesort algorithm
 	 */
-	private void mergeSortNum()
+	private void mergeSortNum(int low, int high)
 	{
+		//Check to see if low is smaller than high, if it is not
+		//the array is sorted
+		if (low<high)
+		{
+			//This finds the middle of the arraylist
+			int middle = (low + high) / 2;
+			//Sort the left side of the arraylist
+			mergeSortNum(low, middle);
+			//Sort the right side of he arraylist
+			mergeSortNum(middle+1, high);
+			//Combine the two halves
+			mergeNum(low, middle, high);
+		}
+	}
+	
+	private void mergeNum(int low, int mid, int high)
+	{
+		ArrayList<Term> temporaryStorageForMergeSort = new ArrayList<Term>();
+		int lowA1 = low;
+		int highA1 = mid;
+		int lowA2 = mid+1;
+		int highA2 = high;
+		int i = lowA1;
+		
+		while((lowA1<=highA1)&&(lowA2<=highA2))
+		{
+			if(termIndex.get(lowA1).compareNum(lowA2)<0)
+			{
+				
+			}
+				
+		}
 		
 	}
 	
