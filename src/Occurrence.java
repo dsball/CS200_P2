@@ -35,4 +35,9 @@ public class Occurrence {
 	{
 		return "DOCUMENT: " + docName + " | FREQUENCY IN DOCUMENT: " + termFrequency;
 	}
+	
+	public String getName()
+	{
+		return docName;
+	}
 }
