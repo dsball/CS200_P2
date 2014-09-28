@@ -22,7 +22,6 @@ public class P2 {
 		while (fileNamesStop == false)
 		{
 			String currentInput= inStream.next();
-			System.out.println(currentInput);
 			if(currentInput.contentEquals("*EOFs*"))
 			{
 				fileNamesStop = true;
@@ -32,18 +31,18 @@ public class P2 {
 				inStream.nextLine();
 				newWebPage.addPage(currentInput);
 			}	
-			//System.out.println(fileNamesStop);
 		}
 		
 		//This creates an int with the number of words to prune
 		int stopWordsNumber = inStream.nextInt();
-		//System.out.println(stopWordsNumber);
 		
 		//This prints out the terms in the page
 		newWebPage.printTerms();
 		
 		//This prunes the number of stop words previously determined
 		newWebPage.pruneStopWords(stopWordsNumber);
+		
+		newWebPage.printTerms();
 		
 		//This is an array list to add all the numbers to check the pages for
 		ArrayList<String> wordChecker = new ArrayList<String>();
@@ -59,8 +58,28 @@ public class P2 {
 		//This goes through and checks each word in the webpages
 		for (int i = 0; i<wordChecker.size(); i++)
 		{
-			//System.out.println(wordChecker.get(i));
-			newWebPage.whichPages(wordChecker.get(i));
+			
+			String[] temp = newWebPage.whichPages(wordChecker.get(i));
+			if(temp == null)
+			{
+				System.out.println("Word not found");
+			}
+			else
+			{
+				System.out.print(wordChecker.get(i) + " in pages: ");
+				for(int j = 0 ; j < temp.length ; j++)
+				{
+					if (j == temp.length-1)
+					{
+						System.out.print(temp[j]);
+					}
+					else
+					{
+						System.out.print(temp[j] + ", ");
+					}
+				}
+				System.out.println();
+			}
 		}
 		
 		//This closes the input file
